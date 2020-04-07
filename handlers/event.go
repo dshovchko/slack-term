@@ -794,13 +794,13 @@ func createNotifyMessage(ctx *context.AppContext, ev *slack.MessageEvent) {
 		channel := ctx.View.Channels.ChannelItems[ctx.View.Channels.FindChannel(ev.Channel)]
 		switch channel.Type {
 		case components.ChannelTypeChannel:
-			message = fmt.Sprintf("Message received on channel: %s", channel.Name)
+			message = fmt.Sprintf("Message received on channel: %s\n%s", channel.Name, ev.Text)
 		case components.ChannelTypeGroup:
-			message = fmt.Sprintf("Message received in group: %s", channel.Name)
+			message = fmt.Sprintf("Message received in group: %s\n%s", channel.Name, ev.Text)
 		case components.ChannelTypeIM:
-			message = fmt.Sprintf("Message received from: %s", channel.Name)
+			message = fmt.Sprintf("Message received from: %s\n%s", channel.Name, ev.Text)
 		default:
-			message = fmt.Sprintf("Message received from: %s", channel.Name)
+			message = fmt.Sprintf("Message received from: %s", channel.Name, ev.Text)
 		}
 
 		ctx.Notify.Push("slack-term", message, "", notificator.UR_NORMAL)
